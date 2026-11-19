@@ -32,7 +32,12 @@ function nowFields() {
   fields.date.value = [d.getFullYear(),pad(d.getMonth()+1),pad(d.getDate())].join('-');
   fields.time.value = [pad(d.getHours()),pad(d.getMinutes())].join(':');
   fields.period.value = periods[Number(d.getHours()>=12)];
+  defaultMedication();
 }
+function defaultMedication() {
+  fields.med.value = fields.period.value === '早餐' ? '服药时' : '未注明';
+}
+for (const radio of fields.period) radio.addEventListener('change', defaultMedication);
 function reset() {
   editing=''; form.reset(); nowFields(); $('title').textContent='记录血压'; $('cancel').hidden=true;
   $('day').textContent=new Date().toLocaleDateString('zh-CN',{weekday:'long'});
